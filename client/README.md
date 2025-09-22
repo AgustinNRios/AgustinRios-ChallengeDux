@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Challenge Frontend Dux - Agustin Rios
 
-## Getting Started
+🔗 **[Ver Deploy en Vercel]()**
 
-First, run the development server:
+---
+
+## 🚀 Stack Principal y Plus
+
+- **React**
+- **Next.js** (componentización)
+- **Tailwind CSS** (design system, consistencia visual)
+- **GitHub** (flujo profesional: ramas, PRs, convenciones de commits)
+- **TypeScript** (tipado seguro y robusto)
+- **Testing:** Jest, React Testing Library (calidad y confianza)
+- **CI/CD:** GitHub Actions + Vercel (deploy automático, feedback rápido)
+
+---
+
+## 🧩 Módulos y Features Clave
+
+- **Feature:**  
+  Descr.
+---
+
+## 🛠️ Buenas Prácticas y Conocimientos Demostrados
+
+<!-- - **Diseño Responsive Fiel al Original:**
+  Implementación responsive que respeta el diseño en todos los dispositivos, demostrando atención al detalle más allá de los requisitos explícitos.
+- **Animaciónes**  
+  Animaciónes de entrada y card con tilt.
+- **Buenas prácticas y atención al detalle:**  
+  Componentización, variables de color, tipografía y componentes reutilizables.
+- **Testing:**  
+  Pruebas unitarias y de integración para lógica y UI.
+- **CI/CD:**  
+  Workflows automáticos para lint, build, test y deploy en Vercel.
+- **SEO:**  
+  Metadatos, sitemaps, etiquetas accesibles y semantic HTML.
+- **SSR:**  
+  Uso de server-side rendering.
+- **Performance:**  
+  Lazy loading, optimización de imágenes y Core Web Vitals monitoreados con PageSpeed Insights.
+
+--- -->
+
+## 🖼️ Screenshots y Resultados
+
+### Vista de Escritorio
+![Vista de Escritorio]()
+
+### Vistas Móviles
+
+| Vista Principal | Menú Abierto |
+| :---: | :---: |
+| ![Vista Móvil]() | ![Menú Móvil]() |
+
+<!-- ### Reporte de PageSpeed Insights
+![Reporte de PageSpeed Insights]() -->
+
+---
+
+## 🏗️ Setup y Ejecución
 
 ```bash
-npm run dev
-# or
+git clone URL #agregar
+cd client #agregar
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**¡Gracias por la oportunidad! Estoy listo para aportar valor y calidad en su equipo.**
