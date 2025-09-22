@@ -41,7 +41,7 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: ./client
+          base-path: ./client
 
       - name: Build project
         run: yarn build
