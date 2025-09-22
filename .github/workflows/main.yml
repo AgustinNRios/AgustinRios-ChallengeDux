@@ -19,27 +19,33 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+          cache-dependency-path: client/yarn.lock
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+        working-directory: ./client
 
       - name: Run lint
         run: yarn lint
+        working-directory: ./client
 
       - name: Run TypeScript check
         run: yarn tsc --noEmit
+        working-directory: ./client
 
       - name: Run tests
         run: yarn test --ci --passWithNoTests
+        working-directory: ./client
 
       - name: Upload coverage reports to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
+        working-directory: ./client
 
       - name: Build project
         run: yarn build
+        working-directory: ./client
 
   deploy:
     name: Deploy to Vercel
@@ -56,12 +62,15 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+          cache-dependency-path: client/yarn.lock
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+        working-directory: ./client
 
       - name: Build Next.js
         run: yarn build
+        working-directory: ./client
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
@@ -69,5 +78,5 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
+          working-directory: ./client
           vercel-args: '--prod'
