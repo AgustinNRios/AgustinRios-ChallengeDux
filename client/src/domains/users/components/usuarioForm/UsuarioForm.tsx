@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 import { Usuario, ESTADOS_FORM } from "@/domains/users/model/usuario";
 import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
 import { useUsuarioForm } from "@/domains/users/hooks/useUsuarioForm";
+import styles from './UsuarioForm.module.css';
 
 interface FormData {
   id?: string;
@@ -38,7 +39,7 @@ export const UsuarioForm = ({
 
 
   return (
-    <div style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+    <div className={styles.container}>
       <form onSubmit={handleSubmit} className="p-fluid">
         <InputGroup
           type="text"
@@ -86,7 +87,7 @@ export const UsuarioForm = ({
           error={errors.estado}
         />
 
-        <div className="flex justify-content-end gap-2">
+        <div className={styles.actions}>
           <Button
             type="button"
             label="Cancelar"

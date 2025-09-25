@@ -2,7 +2,8 @@
 
 import { Dialog } from 'primereact/dialog';
 import { Usuario } from '@/domains/users/model/usuario';
-import { UsuarioForm } from '@/domains/users/components/UsuarioForm';
+import { UsuarioForm } from '@/domains/users/components/usuarioForm/UsuarioForm';
+import styles from './UsuarioModal.module.css';
 
 interface UsuarioFormData {
   id?: string;
@@ -27,14 +28,14 @@ export const UsuarioModal = ({ visible, onHide, onSave, usuario, isEditing = fal
   return (
     <Dialog
       header={
-        <div className="flex align-items-center">
+        <div className={styles.header}>
           {isEditing ? 'Editar Usuario' : 'Usuario'}
         </div>
       }
       visible={visible}
       style={{ width: '500px' }}
       modal
-      className="p-fluid"
+      className={styles.dialog}
       onHide={onHide}
       draggable={false}
       resizable={false}

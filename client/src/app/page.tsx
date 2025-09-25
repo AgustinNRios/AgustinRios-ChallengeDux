@@ -1,5 +1,5 @@
 import { getInitialUsuarios } from '@/lib/usuarios-server';
-import { UsuariosPageClient } from '@/components/UsuariosPageClient';
+import { UsuariosPageClient } from '@/components/usuariosPageClient/UsuariosPageClient';
 
 // Esta página ahora usa ISR (Incremental Static Regeneration)
 export const revalidate = 120; // Revalidar cada 120 segundos

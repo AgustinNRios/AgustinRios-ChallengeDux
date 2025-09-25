@@ -1,0 +1,11 @@
+.container {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}

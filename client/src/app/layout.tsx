@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
 import "./globals.css";
+import styles from "./layout.module.css";
 
 // Theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -38,24 +39,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-[100vh] ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${styles.body} ${geistSans.variable} ${geistMono.variable}`}
       >
-        <header className="flex justify-between items-center bg-[#0763E7] h-[45px] px-4">
-          <ClientOnly fallback={<div className="w-[44px] h-[43px] bg-white/20 rounded"></div>}>
+        <header className={styles.header}>
+          <ClientOnly fallback={<div className={styles.logoFallback}></div>}>
             <Image src="/logo.png" alt="Logo" width={44} height={43} priority />
           </ClientOnly>
-          <Link href="/" className="text-white text-xl">
+          <Link href="/" className={styles.headerLink}>
             <i className="pi pi-cog"></i>
           </Link>
         </header>
-        <div className="flex min-h-[calc(100%-45px)]">
-          <nav className="flex bg-gray-500 w-[65px] min-h-full">
-            <ul className="w-full">
+        <div className={styles.contentWrapper}>
+          <nav className={styles.sidebar}>
+            <ul className={styles.menuList}>
               {[1, 2, 3, 4, 5, 6].map((item) => (
                 <li key={item}>
-                  <ClientOnly fallback={<div className="w-[25px] h-[25px] bg-white/20 rounded mt-5 mx-auto"></div>}>
+                  <ClientOnly fallback={<div className={styles.menuItemFallback}></div>}>
                     <Image 
-                      className="mt-5 mx-auto" 
+                      className={styles.menuItem}
                       src="/box.svg" 
                       alt={`Menu item ${item}`} 
                       width={25} 
@@ -67,7 +68,7 @@ export default function RootLayout({
               ))}
             </ul>
           </nav>
-          <main className="w-full min-h-full">
+          <main className={styles.main}>
             <ClientOnly fallback={<LoadingSkeleton />}>
               {children}
             </ClientOnly>

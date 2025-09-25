@@ -6,9 +6,11 @@ import { Toast } from "primereact/toast";
 import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
 import { Usuario } from "@/domains/users/model/usuario";
 import { UsuariosTable } from "@/domains/users/components/UsuariosTable";
-import { UsuarioModal } from "@/domains/users/components/UsuarioModal";
+import { UsuarioModal } from "@/domains/users/components/usuarioModal/UsuarioModal";
 import { useUsuarioManagement } from "@/domains/users/hooks/useUsuarioManagement";
 import { useEffect } from "react";
+import styles from "./UsuariosPageClient.module.css";
+import Image from "next/image";
 
 interface UsuariosPageClientProps {
   initialUsuarios?: Usuario[];
@@ -54,47 +56,59 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
   const isInitialLoad = usuarios.length === 0 && !loading;
 
   return (
-    <div className="flex flex-col p-4">
+    <div className={styles.container}>
       <Toast ref={toast} />
       
       {/* Header */}
-      <div className="flex justify-between align-items-center mb-4">
-        <h2 className="m-0">Lista de Usuarios</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Usuarios</h2>
         <Button
           label="Nuevo Usuario"
           icon="pi pi-plus"
-          className="p-button-success"
+          className="p-button-info"
           onClick={handleCreate}
         />
       </div>
 
       {/* Filtros */}
-      <form onSubmit={handleSearch} className="flex flex-row gap-3 mb-4 p-fluid">
+      <form onSubmit={handleSearch} className={styles.filters}>
         <InputGroup
           type="text"
           icon="pi-search"
           value={filtros.search}
           onChange={handleSearchChange}
-          placeholder="Buscar por nombre o usuario"
-          className="flex-1"
+          placeholder="Buscar"
+          className={styles.flex1}
         />
         
         {/* Sector fijo en 5000 - no mostrar filtro */}
         
         <InputGroup
           type="dropdown"
-          icon="pi-check-circle"
+          icon="pi-search"
           value={filtros.estado}
           options={ESTADOS}
           onChange={handleEstadoChange}
-          placeholder="Seleccionar estado"
+          placeholder="Seleccionar el Sector"
         />
+
+        <InputGroup
+          type="dropdown"
+          icon="pi-search"
+          value={filtros.estado}
+          options={ESTADOS}
+          onChange={handleEstadoChange}
+          placeholder="Seleccionar el Sector"
+        />
+
+        <Button icon={<span className={styles.iconWrapper}><Image src="/filter-fill.svg" alt="Filtro" width={16} height={16} /></span>} severity="secondary" aria-label="Bookmark" className={styles.button}/>
+        <Button icon={<span className={styles.iconWrapper}><Image src="/sliders-v.svg" alt="Filtro" width={16} height={16} /></span>} severity="secondary" aria-label="Bookmark" className={styles.button}/>
       </form>
 
       {/* Indicador de datos pre-cargados */}
       {isInitialLoad && initialUsuarios && initialUsuarios.length > 0 && (
-        <div className="mb-3 p-2 bg-blue-50 border-l-4 border-blue-400 text-blue-700">
-          <p className="text-sm">
+        <div className={styles.infoBox}>
+          <p className={styles.infoText}>
             <i className="pi pi-info-circle mr-2"></i>
             Mostrando datos pre-cargados. Los datos se actualizarán automáticamente.
           </p>
