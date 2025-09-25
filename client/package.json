@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
+    "test-isr": "npm run build && npm start",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint"
   },
