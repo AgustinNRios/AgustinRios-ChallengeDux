@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "primereact/button";
-import { Usuario, ESTADOS_FORM } from "@/domains/users/model/usuario";
+import { Usuario, ESTADOS_FORM } from "@/Domains/users/model/usuario";
 import { InputGroup } from "@/components/ui/InputGroup";
-import { useUsuarioForm } from "../hooks/useUsuarioForm";
+import { useUsuarioForm } from "@/Domains/users/hooks/useUsuarioForm";
 
 interface FormData {
   id?: string;

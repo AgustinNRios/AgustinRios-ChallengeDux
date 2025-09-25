@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Toast } from 'primereact/toast';
-import { Usuario, UserStatus, SECTOR_FIJO } from '../model/usuario';
-import { usuarioService } from '../service/usuarioService';
+import { Usuario, UserStatus, SECTOR_FIJO } from '@/Domains/users/model/usuario';
+import { usuarioService } from '@/Domains/users/service/usuarioService';
 
 interface FormData {
   id?: string;

@@ -1,4 +1,4 @@
-import { Usuario, PaginationParams } from '@/domains/users/model/usuario';
+import { Usuario, PaginationParams } from '@/Domains/users/model/usuario';
 
 export const usuarioService = {
   async getUsuarios(params: PaginationParams = {}) {

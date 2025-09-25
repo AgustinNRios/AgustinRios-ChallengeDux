@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "primereact/button";
-import { UsuariosTable } from "@/domains/users/components/UsuariosTable";
-import { ESTADOS } from "@/domains/users/model/usuario";
+import { ESTADOS } from "@/Domains/users/model/usuario";
 import { Toast } from "primereact/toast";
-import { UsuarioModal } from "@/domains/users/components/UsuarioModal";
 import { InputGroup } from "@/components/ui/InputGroup";
-import { useUsuarioManagement } from "@/domains/users/hooks/useUsuarioManagement";
-import { Usuario } from "@/domains/users/model/usuario";
+import { Usuario } from "@/Domains/users/model/usuario";
+import { UsuariosTable } from "@/Domains/users/components/UsuariosTable";
+import { UsuarioModal } from "@/Domains/users/components/UsuarioModal";
+import { useUsuarioManagement } from "@/Domains/users/hooks/useUsuarioManagement";
 import { useEffect } from "react";
 
 interface UsuariosPageClientProps {

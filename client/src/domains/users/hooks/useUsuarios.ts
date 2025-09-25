@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Usuario, PaginationParams } from '../model/usuario';
-import { usuarioService } from '../service/usuarioService';
+import { Usuario, PaginationParams } from '@/Domains/users/model/usuario';
+import { usuarioService } from '@/Domains/users/service/usuarioService';
 
 interface UseUsuariosReturn {
   usuarios: Usuario[];

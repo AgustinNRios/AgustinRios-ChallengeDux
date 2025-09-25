@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Skeleton } from 'primereact/skeleton';
-import { UserStatus, Usuario } from '@/domains/users/model/usuario';
+import { UserStatus, Usuario } from '@/Domains/users/model/usuario';
 
 interface UsuariosTableProps {
   usuarios: Usuario[];
