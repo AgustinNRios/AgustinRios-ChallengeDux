@@ -5,7 +5,7 @@ import { ESTADOS } from "@/domains/users/model/usuario";
 import { Toast } from "primereact/toast";
 import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
 import { Usuario } from "@/domains/users/model/usuario";
-import { UsuariosTable } from "@/domains/users/components/UsuariosTable";
+import { UsuariosTable } from "@/domains/users/components/usuariosTable/UsuariosTable";
 import { UsuarioModal } from "@/domains/users/components/usuarioModal/UsuarioModal";
 import { useUsuarioManagement } from "@/domains/users/hooks/useUsuarioManagement";
 import { useEffect } from "react";
@@ -65,7 +65,7 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
         <Button
           label="Nuevo Usuario"
           icon="pi pi-plus"
-          className="p-button-info"
+          className={styles.mainButton}
           onClick={handleCreate}
         />
       </div>

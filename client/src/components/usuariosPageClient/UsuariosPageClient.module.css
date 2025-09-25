@@ -11,6 +11,10 @@
     margin-bottom: 1rem;
 }
 
+.mainButton{
+    background-color: #3B82F6;
+}
+
 .title {
     margin: 0;
     font-size: 25px;

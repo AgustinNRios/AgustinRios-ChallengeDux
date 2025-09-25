@@ -8,6 +8,7 @@ import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Skeleton } from 'primereact/skeleton';
 import { UserStatus, Usuario } from '@/domains/users/model/usuario';
+import styles from './UsuariosTable.module.css';
 
 interface UsuariosTableProps {
   usuarios: Usuario[];
@@ -99,7 +100,7 @@ export const UsuariosTable = ({
         onPage={onPageChange}
         rowsPerPageOptions={[5, 10, 25, 50]}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} usuarios"
+        currentPageReportTemplate=""
         emptyMessage="No se encontraron usuarios"
         className="p-datatable-sm"
       >

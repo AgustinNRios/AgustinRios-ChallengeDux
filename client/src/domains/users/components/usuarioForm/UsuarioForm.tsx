@@ -89,17 +89,18 @@ export const UsuarioForm = ({
 
         <div className={styles.actions}>
           <Button
+            type="submit"
+            label={isEditing ? "Actualizar" : "Confirmar"}
+            icon={`pi ${isEditing ? "pi-check" : "pi-check"}`}
+            className="p-button-primary"
+          />
+          <Button
             type="button"
             label="Cancelar"
             icon="pi pi-times"
             className="p-button-text"
             onClick={onCancel}
-          />
-          <Button
-            type="submit"
-            label={isEditing ? "Actualizar" : "Guardar"}
-            icon={`pi ${isEditing ? "pi-check" : "pi-check"}`}
-            className="p-button-primary"
+            outlined
           />
         </div>
       </form>
