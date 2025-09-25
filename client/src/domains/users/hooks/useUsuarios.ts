@@ -24,7 +24,7 @@ export const useUsuarios = (): UseUsuariosReturn => {
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 10,
+    limit: 5,
     total: 0,
     totalPages: 0,
   });

@@ -2,35 +2,6 @@ import { NextResponse } from 'next/server';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL_WITHOUT_SECTOR || '';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const response = await fetch(`${API_BASE_URL}/${id}`);
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        return NextResponse.json(
-          { error: 'Usuario no encontrado' },
-          { status: 404 }
-        );
-      }
-      throw new Error('Error al obtener el usuario');
-    }
-
-    const usuario = await response.json();
-    return NextResponse.json(usuario);
-  } catch (error) {
-    console.error('Error al obtener usuario:', error);
-    return NextResponse.json(
-      { error: 'Error al obtener el usuario' },
-      { status: 500 }
-    );
-  }
-}
-
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

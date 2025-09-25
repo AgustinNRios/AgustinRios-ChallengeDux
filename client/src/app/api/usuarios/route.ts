@@ -6,9 +6,11 @@ const API_BASE_URL_WITHOUT_SECTOR = process.env.NEXT_PUBLIC_API_URL_WITHOUT_SECT
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get('_page') || '1';
-  const limit = searchParams.get('_limit') || '10';
+  const limit = searchParams.get('_limit') || '5';
   const search = searchParams.get('q') || '';
   const estado = searchParams.get('estado');
+  const sort = searchParams.get('_sort');
+  const order = searchParams.get('_order');
 
   try {
     // Construir la URL de la API con los parámetros
@@ -20,6 +22,12 @@ export async function GET(request: Request) {
     }
     if (estado) {
       url += `&estado=${estado}`;
+    }
+    if (sort) {
+      url += `&_sort=${sort}`;
+    }
+    if (order) {
+      url += `&_order=${order}`;
     }
 
     const fetchResponse = await fetch(url);

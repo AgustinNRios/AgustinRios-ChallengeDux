@@ -2,7 +2,7 @@ import { Usuario, PaginationParams } from '@/domains/users/model/usuario';
 
 export const usuarioService = {
   async getUsuarios(params: PaginationParams = {}) {
-    const { page = 1, limit = 10, search, estado, sortField, sortOrder } = params;
+    const { page = 1, limit = 5, search, estado, sortField, sortOrder } = params;
 
     const queryParams = new URLSearchParams({
       _page: page.toString(),
@@ -26,16 +26,6 @@ export const usuarioService = {
 
     const data = await response.json();
     return data;
-  },
-
-  async getUsuarioById(id: string): Promise<Usuario> {
-    const response = await fetch(`/api/usuarios/${id}`);
-    
-    if (!response.ok) {
-      throw new Error('Usuario no encontrado');
-    }
-
-    return response.json();
   },
 
   async createUsuario(usuario: Usuario) {

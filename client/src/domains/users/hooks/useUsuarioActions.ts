@@ -7,7 +7,7 @@ interface FormData {
   id?: string;
   usuario: string;
   estado: string;
-  sector: number | string;  
+  sector: number | string;
 }
 
 interface UseUsuarioActionsProps {
@@ -29,6 +29,22 @@ export const useUsuarioActions = ({
   onError,
 }: UseUsuarioActionsProps = {}): UseUsuarioActionsReturn => {
   const toast = useRef<Toast>(null);
+
+  const revalidateCache = async (path: string = '/') => {
+    try {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ path }),
+      });
+      console.log(`🔄 ISR bajo demanda: Cache invalidada para ${path}`);
+    } catch (error) {
+      console.error('Error al invalidar cache ISR:', error);
+      // No mostrar error al usuario, es solo para optimización
+    }
+  };
 
   const showSuccess = (message: string) => {
     toast.current?.show({
@@ -56,9 +72,13 @@ export const useUsuarioActions = ({
         estado: data.estado as UserStatus,
         sector: SECTOR_FIJO, // Siempre usar sector fijo
       };
-      
+
       await usuarioService.createUsuario(usuarioData);
       showSuccess('Usuario creado exitosamente');
+
+      // Invalidar cache ISR inmediatamente
+      await revalidateCache('/');
+
       onSuccess?.();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Error al crear el usuario';
@@ -78,9 +98,13 @@ export const useUsuarioActions = ({
         estado: data.estado as UserStatus,
         sector: SECTOR_FIJO, // Siempre usar sector fijo
       };
-      
+
       await usuarioService.updateUsuario(data.id, usuarioData);
       showSuccess('Usuario actualizado exitosamente');
+
+      // Invalidar cache ISR inmediatamente
+      await revalidateCache('/');
+
       onSuccess?.();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Error al actualizar el usuario';
@@ -94,9 +118,13 @@ export const useUsuarioActions = ({
       if (!usuario.id) {
         throw new Error('ID de usuario requerido para eliminar');
       }
-      
+
       await usuarioService.deleteUsuario(usuario.id);
       showSuccess(`Usuario ${usuario.usuario} eliminado exitosamente`);
+
+      // Invalidar cache ISR inmediatamente
+      await revalidateCache('/');
+
       onSuccess?.();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Error al eliminar el usuario';

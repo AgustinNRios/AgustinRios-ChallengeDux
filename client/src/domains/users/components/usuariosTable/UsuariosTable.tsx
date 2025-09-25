@@ -1,6 +1,6 @@
 'use client';
 
-import { DataTable, DataTableStateEvent } from 'primereact/datatable';
+import { DataTable, DataTableStateEvent, DataTableSortEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useRef } from 'react';
@@ -21,6 +21,9 @@ interface UsuariosTableProps {
     total: number;
   };
   onPageChange: (event: DataTableStateEvent) => void;
+  sortField: string;
+  sortOrder: 1 | -1 | null;
+  onSort: (event: DataTableSortEvent) => void;
 }
 
 export const UsuariosTable = ({
@@ -30,6 +33,9 @@ export const UsuariosTable = ({
   onDelete,
   pagination,
   onPageChange,
+  sortField,
+  sortOrder,
+  onSort,
 }: UsuariosTableProps) => {
   const toast = useRef<Toast>(null);
 
@@ -103,6 +109,10 @@ export const UsuariosTable = ({
         currentPageReportTemplate=""
         emptyMessage="No se encontraron usuarios"
         className="p-datatable-sm"
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSort={onSort}
+        removableSort
       >
         <Column 
           field="id" 

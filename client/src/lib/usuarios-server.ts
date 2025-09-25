@@ -2,13 +2,15 @@ import { PaginationParams } from '@/domains/users/model/usuario';
 
 // Función para obtener usuarios en el servidor (para ISR)
 export async function getUsuariosServer(params: PaginationParams = {}) {
-  const { page = 1, limit = 10, search, estado } = params;
+  const { page = 1, limit = 5, search, estado, sortField, sortOrder } = params;
   
   const queryParams = new URLSearchParams({
     _page: page.toString(),
     _limit: limit.toString(),
     ...(search && { q: search }),
     ...(estado && { estado }),
+    ...(sortField && { _sort: sortField }),
+    ...(sortOrder && { _order: sortOrder === 1 ? 'asc' : 'desc' }),
   });
 
   try {
@@ -53,7 +55,7 @@ export async function getUsuariosServer(params: PaginationParams = {}) {
       data: [],
       pagination: {
         page: 1,
-        limit: 10,
+        limit: 5,
         total: 0,
         totalPages: 0,
       }
@@ -72,7 +74,7 @@ export async function getInitialUsuarios() {
   }
   
   try {
-    const result = await getUsuariosServer({ page: 1, limit: 10 });
+    const result = await getUsuariosServer({ page: 1, limit: 5 });
     
     console.log('✅ ISR: Datos obtenidos exitosamente:', {
       dataLength: result?.data?.length || 0,
@@ -88,7 +90,7 @@ export async function getInitialUsuarios() {
       data: Array.isArray(result.data) ? result.data : [],
       pagination: result.pagination || {
         page: 1,
-        limit: 10,
+        limit: 5,
         total: 0,
         totalPages: 0,
       }
@@ -102,7 +104,7 @@ export async function getInitialUsuarios() {
       data: [],
       pagination: {
         page: 1,
-        limit: 10,
+        limit: 5,
         total: 0,
         totalPages: 0,
       }

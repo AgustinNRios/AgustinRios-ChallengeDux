@@ -42,6 +42,9 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
     handleDelete,
     handlePageChange,
     setInitialData,
+    sortField,
+    sortOrder,
+    handleSort,
   } = useUsuarioManagement();
 
   // Establecer datos iniciales del servidor
@@ -80,8 +83,6 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
           placeholder="Buscar"
           className={styles.flex1}
         />
-        
-        {/* Sector fijo en 5000 - no mostrar filtro */}
         
         <InputGroup
           type="dropdown"
@@ -123,6 +124,9 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
         onDelete={handleDelete}
         pagination={pagination}
         onPageChange={handlePageChange}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSort={handleSort}
       />
 
       {/* Modal */}
