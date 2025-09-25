@@ -10,8 +10,8 @@ import "primereact/resources/primereact.min.css";
 // Icons
 import "primeicons/primeicons.css";
 import Link from "next/link";
-import { ClientOnly } from "@/components/ui/ClientOnly";
-import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
+import { ClientOnly } from "@/components/ui/clientOnly/ClientOnly";
+import { LoadingSkeleton } from "@/components/ui/loadingSkeleton/LoadingSkeleton";
 // PrimeFlex
 // import "primeflex/primeflex.css";
 
