@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem; /* equivalente a gap-1 */
+    transform: scale(0.75); /* scale-75 */
+}
+
+@media (min-width: 640px) {
+    /* sm:scale-100 */
+    .container {
+        transform: scale(1);
+    }
+}
+
+.text {
+    color: #6b7280; /* text-gray-500 */
+    font-size: 0.875rem; /* text-sm */
+}

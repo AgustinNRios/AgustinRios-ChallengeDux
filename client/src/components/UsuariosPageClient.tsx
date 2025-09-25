@@ -5,7 +5,7 @@ import { UsuariosTable } from "@/domains/users/components/UsuariosTable";
 import { ESTADOS } from "@/domains/users/model/usuario";
 import { Toast } from "primereact/toast";
 import { UsuarioModal } from "@/domains/users/components/UsuarioModal";
-import { InputGroup } from "@/components/ui/InputGroup";
+import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
 import { useUsuarioManagement } from "@/domains/users/hooks/useUsuarioManagement";
 import { Usuario } from "@/domains/users/model/usuario";
 import { useEffect } from "react";

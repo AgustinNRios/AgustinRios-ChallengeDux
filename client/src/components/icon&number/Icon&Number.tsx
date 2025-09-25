@@ -1,4 +1,5 @@
 import Image from "next/image";
+import styles from "./IconAndNumber.module.css";
 
 interface Props {
     src: string;
@@ -7,14 +8,14 @@ interface Props {
 
 export default function IconAndNumber ({src, number}: Props) {
     return (
-        <div className="flex flex-row gap-1 scale-75 sm:scale-100">
+        <div className={styles.container}>
             <Image
                 src={src}
                 alt="icono"
                 width={20}
                 height={20}
             />
-            <p className="text-gray-500 text-sm">{number}</p>
+            <p className={styles.text}>{number}</p>
         </div>
     )
 }

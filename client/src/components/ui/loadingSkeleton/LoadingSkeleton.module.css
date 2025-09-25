@@ -22,7 +22,7 @@
 .headerTitle {
     height: 2rem;
     width: 12rem;
-    background: #e5e7eb; /* gray-200 */
+    background: #e5e7eb;
     border-radius: 0.25rem;
 }
 
@@ -64,7 +64,7 @@
 .tableHeader {
     display: flex;
     padding: 0.75rem;
-    background: #f9fafb; /* gray-50 */
+    background: #f9fafb;
     border-bottom: 1px solid #e5e7eb;
 }
 

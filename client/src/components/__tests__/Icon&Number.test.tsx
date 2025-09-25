@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import IconAndNumber from '../Icon&Number';
+import IconAndNumber from '../icon&number/Icon&Number';
 
 describe('IconAndNumber component', () => {
     test('renders correctly with a number', () => {

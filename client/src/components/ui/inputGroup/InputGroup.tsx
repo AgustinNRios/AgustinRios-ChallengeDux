@@ -2,6 +2,7 @@
 
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
+import styles from './InputGroup.module.css';
 
 interface Option {
   label: string;
@@ -36,10 +37,10 @@ export const InputGroup = ({
   error,
 }: InputGroupProps) => {
   return (
-    <div className={`field mb-4 ${className}`}>
+    <div className={`${styles.field} ${className || ''}`}>
       {label && (
-        <label className="font-bold text-gray-700">
-          {label}{required && <span className="text-red-500">*</span>}
+        <label className={styles.label}>
+          {label}{required && <span className={styles.required}>*</span>}
         </label>
       )}
       <div className="p-inputgroup">

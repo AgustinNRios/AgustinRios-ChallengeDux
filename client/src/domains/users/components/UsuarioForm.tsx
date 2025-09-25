@@ -2,7 +2,7 @@
 
 import { Button } from "primereact/button";
 import { Usuario, ESTADOS_FORM } from "@/domains/users/model/usuario";
-import { InputGroup } from "@/components/ui/InputGroup";
+import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
 import { useUsuarioForm } from "../hooks/useUsuarioForm";
 
 interface FormData {
