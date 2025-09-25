@@ -1,8 +1,8 @@
 'use client';
 
 import { Dialog } from 'primereact/dialog';
-import { Usuario } from '@/Domains/users/model/usuario';
-import { UsuarioForm } from '@/Domains/users/components/UsuarioForm';
+import { Usuario } from '@/domains/users/model/usuario';
+import { UsuarioForm } from '@/domains/users/components/UsuarioForm';
 
 interface UsuarioFormData {
   id?: string;

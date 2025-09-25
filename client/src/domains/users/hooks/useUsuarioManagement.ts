@@ -1,8 +1,8 @@
-import { useUsuarios } from '@/Domains/users/hooks/useUsuarios';
-import { useUsuarioModal } from '@/Domains/users/hooks/useUsuarioModal';
-import { useUsuarioFilters } from '@/Domains/users/hooks/useUsuarioFilters';
-import { useUsuarioActions } from '@/Domains/users/hooks/useUsuarioActions';
-import { Usuario } from '@/Domains/users/model/usuario';
+import { useUsuarios } from '@/domains/users/hooks/useUsuarios';
+import { useUsuarioModal } from '@/domains/users/hooks/useUsuarioModal';
+import { useUsuarioFilters } from '@/domains/users/hooks/useUsuarioFilters';
+import { useUsuarioActions } from '@/domains/users/hooks/useUsuarioActions';
+import { Usuario } from '@/domains/users/model/usuario';
 import { DataTableStateEvent } from 'primereact/datatable';
 import { useRef } from 'react';
 

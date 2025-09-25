@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 import { Toast } from 'primereact/toast';
-import { Usuario, UserStatus, SECTOR_FIJO } from '@/Domains/users/model/usuario';
-import { usuarioService } from '@/Domains/users/service/usuarioService';
+import { Usuario, UserStatus, SECTOR_FIJO } from '@/domains/users/model/usuario';
+import { usuarioService } from '@/domains/users/service/usuarioService';
 
 interface FormData {
   id?: string;
   usuario: string;
   estado: string;
-  sector: number | string;
+  sector: number | string;  
 }
 
 interface UseUsuarioActionsProps {

@@ -1,4 +1,4 @@
-import { PaginationParams } from '@/Domains/users/model/usuario';
+import { PaginationParams } from '@/domains/users/model/usuario';
 
 // Función para obtener usuarios en el servidor (para ISR)
 export async function getUsuariosServer(params: PaginationParams = {}) {
@@ -23,8 +23,9 @@ export async function getUsuariosServer(params: PaginationParams = {}) {
     const url = `${externalApiUrl}?${queryParams}`;
     
     const response = await fetch(url, {
-      // Importante: No usar cache para ISR
-      cache: 'no-store',
+      // Para ISR, especificamos un tiempo de revalidación.
+      // Next.js cacheará esta respuesta por 120 segundos.
+      next: { revalidate: 120 },
     });
     
     if (!response.ok) {
