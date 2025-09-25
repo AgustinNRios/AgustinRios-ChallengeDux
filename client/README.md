@@ -1,6 +1,6 @@
 # Challenge Frontend Dux - Agustin Rios
 
-🔗 **[Ver Deploy en Vercel]()**
+🔗 **[Ver Deploy en Vercel](https://agustin-rios-challenge-dux.vercel.app/)**
 
 ---
 
@@ -62,8 +62,8 @@
 ## 🏗️ Setup y Ejecución
 
 ```bash
-git clone URL #agregar
-cd client #agregar
+git clone https://github.com/AgustinNRios/AgustinRios-ChallengeDux
+cd client 
 yarn install
 yarn dev
 ```
