@@ -1,15 +1,14 @@
-import { PaginationParams } from '@/domains/users/model/usuario';
+import { PaginationParams } from '@/Domains/users/model/usuario';
 
 // Función para obtener usuarios en el servidor (para ISR)
 export async function getUsuariosServer(params: PaginationParams = {}) {
-  const { page = 1, limit = 10, search, estado, sector } = params;
+  const { page = 1, limit = 10, search, estado } = params;
   
   const queryParams = new URLSearchParams({
     _page: page.toString(),
     _limit: limit.toString(),
     ...(search && { q: search }),
     ...(estado && { estado }),
-    ...(sector && { sector }),
   });
 
   try {

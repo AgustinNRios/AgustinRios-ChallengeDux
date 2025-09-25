@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Usuario } from '../model/usuario';
+import { Usuario } from '@/Domains/users/model/usuario';
 
 interface UseUsuarioModalReturn {
   showModal: boolean;
