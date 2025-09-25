@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL_WITHOUT_SECTOR || '';
 
 export async function GET(
   request: Request,
@@ -40,7 +40,7 @@ export async function PUT(
     const body = await request.json();
     
     // Validar datos requeridos
-    if (!body.nombre || !body.usuario || body.estado === undefined) {
+    if (!body.usuario || !body.estado) {
       return NextResponse.json(
         { error: 'Faltan campos requeridos' },
         { status: 400 }
@@ -54,7 +54,6 @@ export async function PUT(
       },
       body: JSON.stringify({
         ...body,
-        estado: body.estado ? 'Habilitado' : 'Deshabilitado',
       }),
     });
 

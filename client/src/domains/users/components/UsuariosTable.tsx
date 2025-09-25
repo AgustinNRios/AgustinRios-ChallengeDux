@@ -102,7 +102,6 @@ export const UsuariosTable = ({
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} usuarios"
         emptyMessage="No se encontraron usuarios"
         className="p-datatable-sm"
-        stripedRows
       >
         <Column 
           field="id" 

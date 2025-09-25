@@ -3,11 +3,13 @@ import { useUsuarioModal } from '@/domains/users/hooks/useUsuarioModal';
 import { useUsuarioFilters } from '@/domains/users/hooks/useUsuarioFilters';
 import { useUsuarioActions } from '@/domains/users/hooks/useUsuarioActions';
 import { Usuario } from '@/domains/users/model/usuario';
-import { DataTableStateEvent } from 'primereact/datatable';
-import { useRef } from 'react';
+import { DataTableStateEvent, DataTableSortEvent } from 'primereact/datatable';
+import { useRef, useState } from 'react';
 
 export const useUsuarioManagement = () => {
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [sortField, setSortField] = useState<string>('id');
+  const [sortOrder, setSortOrder] = useState<1 | -1 | null>(1);
   const {
     usuarios,
     loading,
@@ -63,7 +65,7 @@ export const useUsuarioManagement = () => {
     }
     
     // Ejecutar búsqueda inmediatamente
-    fetchUsuarios(params);
+    fetchUsuarios({ ...params, sortField, sortOrder });
   };
 
   const {
@@ -156,9 +158,24 @@ export const useUsuarioManagement = () => {
   };
 
   const handleDelete = async (usuario: Usuario) => {
-    if (window.confirm(`¿Está seguro de eliminar el usuario ${usuario.usuario}?`)) {
-      await deleteUsuario(usuario);
-    }
+    // La confirmación ahora se delega a un modal u otro componente de la UI.
+    // Se llama directamente a la acción de eliminar.
+    await deleteUsuario(usuario);
+  };
+
+  const handleSort = (e: DataTableSortEvent) => {
+    const field = e.sortField;
+    const order = e.sortOrder as (1 | -1 | null);
+    setSortField(field);
+    setSortOrder(order);
+    fetchUsuarios({
+      page: 1, // Reset to first page on sort
+      limit: pagination.limit,
+      search: filtros.search,
+      estado: filtros.estado,
+      sortField: field,
+      sortOrder: order,
+    });
   };
 
   const handleSave = async (data: {
@@ -211,5 +228,10 @@ export const useUsuarioManagement = () => {
     // Notificaciones
     showSuccess,
     showError,
+
+    // Ordenamiento
+    sortField,
+    sortOrder,
+    handleSort,
   };
 };

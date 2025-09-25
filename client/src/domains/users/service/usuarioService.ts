@@ -2,18 +2,19 @@ import { Usuario, PaginationParams } from '@/domains/users/model/usuario';
 
 export const usuarioService = {
   async getUsuarios(params: PaginationParams = {}) {
-    const { page = 1, limit = 10, search, estado } = params;
-    
-    // Validar que estado sea un string válido y no sea 'todos'
-    const estadoValue = estado && typeof estado === 'string' && estado !== 'todos' && estado !== '' ? estado : undefined;
-    
+    const { page = 1, limit = 10, search, estado, sortField, sortOrder } = params;
+
     const queryParams = new URLSearchParams({
       _page: page.toString(),
       _limit: limit.toString(),
-      sector: '5000', // Sector fijo
-      ...(search && { q: search }),
-      ...(estadoValue && { estado: estadoValue }),
     });
+
+    if (search) queryParams.append('q', search);
+    if (estado && estado !== 'todos' && estado !== '') queryParams.append('estado', estado);
+    if (sortField && sortOrder) {
+      queryParams.append('_sort', sortField);
+      queryParams.append('_order', sortOrder === 1 ? 'asc' : 'desc');
+    }
 
     const url = `/api/usuarios?${queryParams}`;
     
@@ -37,7 +38,7 @@ export const usuarioService = {
     return response.json();
   },
 
-  async createUsuario(usuario: Omit<Usuario, 'id'>) {
+  async createUsuario(usuario: Usuario) {
     const response = await fetch('/api/usuarios', {
       method: 'POST',
       headers: {

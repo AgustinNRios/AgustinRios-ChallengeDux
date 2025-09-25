@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const API_BASE_URL_WITHOUT_SECTOR = process.env.NEXT_PUBLIC_API_URL_WITHOUT_SECTOR || '';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -56,37 +57,43 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    console.log("\n--- [API] Petición POST recibida en /api/usuarios ---");
+
     const body = await request.json();
-    
+    console.log("[API] Cuerpo (body) recibido del frontend:", body);
+
     // Validar datos requeridos
-    if (!body.nombre || !body.usuario || body.estado === undefined) {
+    if (!body.usuario || !body.estado || !body.id || !body.sector) {
+      console.error("[API] Error: Faltan campos requeridos.");
       return NextResponse.json(
         { error: 'Faltan campos requeridos' },
         { status: 400 }
       );
     }
 
-    const response = await fetch(API_BASE_URL, {
+    console.log("[API] Enviando datos a la API externa...");
+    const response = await fetch(API_BASE_URL_WITHOUT_SECTOR, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        ...body,
-        estado: body.estado ? 'Habilitado' : 'Deshabilitado',
-      }),
+      body: JSON.stringify(body), // Reenviamos el cuerpo tal cual lo recibimos
     });
 
     if (!response.ok) {
-      throw new Error('Error al crear el usuario');
+      const errorText = await response.text();
+      console.error("[API] Error de la API externa:", response.status, errorText);
+      throw new Error('Error al crear el usuario en la API externa');
     }
 
     const nuevoUsuario = await response.json();
+    console.log("[API] Usuario creado exitosamente en la API externa:", nuevoUsuario);
     return NextResponse.json(nuevoUsuario, { status: 201 });
+
   } catch (error) {
-    console.error('Error al crear usuario:', error);
+    console.error('[API] Error fatal en el manejador POST:', error);
     return NextResponse.json(
-      { error: 'Error al crear el usuario' },
+      { error: 'Error interno del servidor al crear el usuario' },
       { status: 500 }
     );
   }

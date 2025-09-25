@@ -51,6 +51,7 @@ export const useUsuarioActions = ({
   const createUsuario = async (data: FormData) => {
     try {
       const usuarioData = {
+        id: data.id,
         usuario: data.usuario,
         estado: data.estado as UserStatus,
         sector: SECTOR_FIJO, // Siempre usar sector fijo

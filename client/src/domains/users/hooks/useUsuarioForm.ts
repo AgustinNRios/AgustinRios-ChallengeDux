@@ -71,10 +71,15 @@ export const useUsuarioForm = ({
   };
 
   const handleInputChange = (field: keyof FormData, value: string | number | UserStatus) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setFormData((prev) => {
+      const newState = {
+        ...prev,
+        [field]: value,
+      };
+      // Log para depurar el estado del formulario en tiempo real
+      console.log('[useUsuarioForm] Nuevo estado del formulario:', newState);
+      return newState;
+    });
 
     // Limpiar error del campo cuando el usuario empiece a escribir
     if (errors[field]) {
@@ -88,8 +93,8 @@ export const useUsuarioForm = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Asegurar que siempre se envíe el sector fijo
-      onSubmit({ ...formData, sector: SECTOR_FIJO });
+      // El formData ya contiene el sector y el id, lo enviamos directamente.
+      onSubmit(formData);
     }
   };
 

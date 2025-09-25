@@ -27,6 +27,8 @@ export interface PaginationParams {
   limit?: number;
   search?: string;
   estado?: string;
+  sortField?: string;
+  sortOrder?: 1 | -1 | null;
 }
 
 // Sector fijo - no se usa en filtros
