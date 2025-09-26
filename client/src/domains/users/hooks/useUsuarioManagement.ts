@@ -1,5 +1,4 @@
 import { useUsuarios } from '@/domains/users/hooks/useUsuarios';
-import { useUsuarioModal } from '@/domains/users/hooks/useUsuarioModal';
 import { useUsuarioFilters } from '@/domains/users/hooks/useUsuarioFilters';
 import { useUsuarioActions } from '@/domains/users/hooks/useUsuarioActions';
 import { Usuario } from '@/domains/users/model/usuario';
@@ -10,6 +9,9 @@ export const useUsuarioManagement = () => {
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [sortField, setSortField] = useState<string>('id');
   const [sortOrder, setSortOrder] = useState<1 | -1 | null>(1);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [editingUsuario, setEditingUsuario] = useState<Usuario | null>(null);
+
   const {
     usuarios,
     loading,
@@ -21,20 +23,29 @@ export const useUsuarioManagement = () => {
   } = useUsuarios();
 
   const {
-    showModal,
-    editingUsuario,
-    isEditing,
-    openCreateModal,
-    openEditModal,
-    closeModal,
-  } = useUsuarioModal();
-
-  const {
     filtros,
     setFiltros,
     handleSearchChange,
     resetFilters,
   } = useUsuarioFilters();
+
+  // Modal management functions
+  const openCreateModal = () => {
+    setEditingUsuario(null);
+    setShowModal(true);
+  };
+
+  const openEditModal = (usuario: Usuario) => {
+    setEditingUsuario(usuario);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setEditingUsuario(null);
+  };
+
+  const isEditing = editingUsuario !== null;
 
   const handleEstadoChange = (value: string | number) => {
     // Convertir a string de forma segura
@@ -104,7 +115,7 @@ export const useUsuarioManagement = () => {
   // Manejar cambios de paginación
   const handlePageChange = (event: DataTableStateEvent) => {
     const params: { page: number; limit: number; search?: string; estado?: string } = {
-      page: (event.page || 0) + 1, // PrimeReact usa índice 0, backend usa 1
+      page: (event.page || 0) + 1, // PrimeReact usa índice 0, la api usa 1
       limit: event.rows || pagination.limit
     };
     
@@ -212,8 +223,8 @@ export const useUsuarioManagement = () => {
     handlePageChange,
     
     // Acciones de modal
-    handleCreate,
-    handleEdit,
+    handleCreate: openCreateModal,
+    handleEdit: openEditModal,
     closeModal,
     
     // Acciones CRUD

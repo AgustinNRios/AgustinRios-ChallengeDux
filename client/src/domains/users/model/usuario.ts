@@ -48,3 +48,10 @@ export const ESTADOS_FORM = [
   { label: 'Activo', value: UserStatus.ACTIVO },
   { label: 'Inactivo', value: UserStatus.INACTIVO },
 ];
+
+export interface FormData {
+  id?: string;
+  usuario: string;
+  estado: string;
+  sector: number | string;
+}
