@@ -28,15 +28,15 @@
 
 .contentWrapper {
     display: flex;
+    flex-direction: column;
     min-height: calc(100% - 45px);
 }
 
-.sidebar {
-    display: flex;
-    background-color: #2D3E50;
-    width: 65px;
-    min-width: 40px;
-    min-height: 100%;
+@media (min-width: 768px) {
+    .contentWrapper {
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 .menuList {

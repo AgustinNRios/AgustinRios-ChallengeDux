@@ -13,8 +13,7 @@ import "primeicons/primeicons.css";
 import Link from "next/link";
 import { ClientOnly } from "@/components/ui/clientOnly/ClientOnly";
 import { LoadingSkeleton } from "@/components/ui/loadingSkeleton/LoadingSkeleton";
-// PrimeFlex
-// import "primeflex/primeflex.css";
+import AppSidebar from "@/components/sidebar/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,24 +49,7 @@ export default function RootLayout({
           </Link>
         </header>
         <div className={styles.contentWrapper}>
-          <nav className={styles.sidebar}>
-            <ul className={styles.menuList}>
-              {[1, 2, 3, 4, 5, 6].map((item) => (
-                <li key={item}>
-                  <ClientOnly fallback={<div className={styles.menuItemFallback}></div>}>
-                    <Image 
-                      className={styles.menuItem}
-                      src="/box.svg" 
-                      alt={`Menu item ${item}`} 
-                      width={20} 
-                      height={20}
-                      priority={item <= 2}
-                    />
-                  </ClientOnly>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <AppSidebar/>
           <main className={styles.main}>
             <ClientOnly fallback={<LoadingSkeleton />}>
               {children}
