@@ -88,7 +88,7 @@ export const UsuarioForm = ({
             label={isEditing ? "Actualizar" : "Confirmar"}
             icon={`pi ${isEditing ? "pi-check" : "pi-check"}`}
             className="p-button-primary"
-            style={{maxWidth: '118px'}}
+            style={{maxWidth: '145px'}}
           />
           <Button
             pt={{root: {
@@ -100,7 +100,7 @@ export const UsuarioForm = ({
             className="p-button-primary"
             onClick={onCancel}
             outlined
-            style={{maxWidth: '118px'}}
+            style={{maxWidth: '145px'}}
           />
         </div>
       </form>
