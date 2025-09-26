@@ -102,8 +102,10 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
           placeholder="Seleccionar el Sector"
         />
 
-        <Button icon={<span className={styles.iconWrapper}><Image src="/filter-fill.svg" alt="Filtro" width={16} height={16} /></span>} severity="secondary" aria-label="Bookmark" className={styles.button}/>
-        <Button icon={<span className={styles.iconWrapper}><Image src="/sliders-v.svg" alt="Filtro" width={16} height={16} /></span>} severity="secondary" aria-label="Bookmark" className={styles.button}/>
+        <div className={styles.gap}>
+          <Button icon={<span className={styles.iconWrapper}><Image src="/filter-fill.svg" alt="Filtro" width={16} height={16} /></span>} severity="secondary" aria-label="Bookmark" className={styles.button}/>
+          <Button icon={<span className={styles.iconWrapper}><Image src="/sliders-v.svg" alt="Filtro" width={16} height={16} /></span>} severity="secondary" aria-label="Bookmark" className={styles.button}/>
+        </div>
       </form>
 
       {/* Indicador de datos pre-cargados */}

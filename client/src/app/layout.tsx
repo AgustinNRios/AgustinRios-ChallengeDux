@@ -59,8 +59,8 @@ export default function RootLayout({
                       className={styles.menuItem}
                       src="/box.svg" 
                       alt={`Menu item ${item}`} 
-                      width={25} 
-                      height={25}
+                      width={20} 
+                      height={20}
                       priority={item <= 2}
                     />
                   </ClientOnly>

@@ -46,7 +46,7 @@ export const UsuarioForm = ({
           icon="pi-id-card"
           value={formData.id || ""}
           onChange={(value) => handleInputChange("id", value)}
-          placeholder="Ingrese el ID"
+          placeholder="Ingrese el ID del usuario"
           label="ID"
           required={!isEditing}
           error={errors.id}
@@ -58,33 +58,32 @@ export const UsuarioForm = ({
           icon="pi-user"
           value={formData.usuario}
           onChange={(value) => handleInputChange("usuario", value)}
-          placeholder="Ingrese el nombre de usuario"
-          label="Usuario:"
+          placeholder="Ingrese el nombre del usuario"
+          label="Nombre:"
           required={true}
           error={errors.usuario}
         />
 
+          <InputGroup 
+            value={formData.estado} 
+            onChange={(value) => handleInputChange("estado", value)}
+            placeholder="Seleccione un estado"
+            type="dropdown"
+            icon="pi-check-circle"
+            options={ESTADOS_FORM}
+            label="Estado:"
+            required={true}
+            error={errors.estado}
+          />
 
         <InputGroup
           type="text"
           icon="pi-building"
           value="Desarrollo (5000)"
           onChange={() => {}} // No hacer nada, es solo lectura
-          placeholder="Desarrollo (5000)"
+          placeholder="Seleccionar el sector"
           label="Sector:"
           disabled={true}
-        />
-
-        <InputGroup 
-          value={formData.estado} 
-          onChange={(value) => handleInputChange("estado", value)}
-          placeholder="Seleccione un estado"
-          type="dropdown"
-          icon="pi-check-circle"
-          options={ESTADOS_FORM}
-          label="Estado:"
-          required={true}
-          error={errors.estado}
         />
 
         <div className={styles.actions}>
@@ -98,7 +97,7 @@ export const UsuarioForm = ({
             type="button"
             label="Cancelar"
             icon="pi pi-times"
-            className="p-button-text"
+            className="p-button-primary"
             onClick={onCancel}
             outlined
           />
