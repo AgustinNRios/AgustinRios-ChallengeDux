@@ -10,6 +10,10 @@ interface UseUsuarioModalReturn {
   closeModal: () => void;
 }
 
+/**
+ * Hook personalizado que encapsula la lógica y el estado para controlar el modal de creación/edición de usuarios.
+ * Proporciona una API clara para abrir, cerrar y determinar el estado del modal.
+ */
 export const useUsuarioModal = (): UseUsuarioModalReturn => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editingUsuario, setEditingUsuario] = useState<Usuario | null>(null);

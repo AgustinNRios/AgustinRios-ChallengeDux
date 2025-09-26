@@ -1,13 +1,9 @@
-import { useState } from 'react';
-
-interface Filtros {
-  search: string;
-  estado: string;
-}
+import { useState, Dispatch, SetStateAction } from 'react';
+import { Filtros } from '@/domains/users/utils/constants';
 
 interface UseUsuarioFiltersReturn {
   filtros: Filtros;
-  setFiltros: React.Dispatch<React.SetStateAction<Filtros>>;
+  setFiltros: Dispatch<SetStateAction<Filtros>>;
   handleSearchChange: (value: string | number) => void;
   handleEstadoChange: (value: string | number) => void;
   resetFilters: () => void;
@@ -22,11 +18,12 @@ const initialFilters: Filtros = {
   estado: '',
 };
 
+/**
+ * Hook personalizado para gestionar el estado y la lógica de los filtros de la tabla de usuarios.
+ * Centraliza el manejo de los filtros de búsqueda y estado, facilitando su reutilización y mantenimiento.
+ */
 export const useUsuarioFilters = (): UseUsuarioFiltersReturn => {
-  const [filtros, setFiltros] = useState<Filtros>({
-    search: '',
-    estado: '', // Asegurar que siempre sea string
-  });
+  const [filtros, setFiltros] = useState<Filtros>(initialFilters);
 
   const handleSearchChange = (value: string | number) => {
     setFiltros(prev => ({ ...prev, search: String(value) }));
@@ -43,10 +40,17 @@ export const useUsuarioFilters = (): UseUsuarioFiltersReturn => {
     setFiltros(prev => ({ ...prev, estado: estadoValue }));
   };
 
+  /**
+   * Restablece los filtros a su estado inicial.
+   */
   const resetFilters = () => {
     setFiltros(initialFilters);
   };
 
+  /**
+   * Devuelve un objeto con los parámetros de filtro listos para ser enviados a la API.
+   * Omite los filtros que no tienen valor para mantener las URLs de la API limpias.
+   */
   const getFilterParams = () => {
     const params: { search?: string; estado?: string } = {};
     
@@ -54,7 +58,7 @@ export const useUsuarioFilters = (): UseUsuarioFiltersReturn => {
       params.search = filtros.search;
     }
     
-    // Solo incluir estado si tiene valor y no es 'todos' o cadena vacía
+    // Solo se incluye el filtro de estado si tiene un valor válido.
     if (filtros.estado && filtros.estado !== '' && filtros.estado !== 'todos') {
       params.estado = filtros.estado;
     }

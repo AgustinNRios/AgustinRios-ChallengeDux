@@ -2,7 +2,7 @@
 
 import { Button } from "primereact/button";
 import { Usuario, ESTADOS_FORM, FormData } from "@/domains/users/model/usuario";
-import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
+import { InputGroup } from "@/components/molecules/InputGroup/InputGroup";
 import { useUsuarioForm } from "@/domains/users/hooks/useUsuarioForm";
 import styles from './UsuarioForm.module.css';
 

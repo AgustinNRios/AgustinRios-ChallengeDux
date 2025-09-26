@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { RefObject, useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { Usuario, UserStatus, SECTOR_FIJO, FormData } from '@/domains/users/model/usuario';
 import { usuarioService } from '@/domains/users/service/usuarioService';
@@ -9,7 +9,7 @@ interface UseUsuarioActionsProps {
 }
 
 interface UseUsuarioActionsReturn {
-  toast: React.RefObject<Toast | null>;
+  toast: RefObject<Toast | null>;
   createUsuario: (data: FormData) => Promise<void>;
   updateUsuario: (data: FormData) => Promise<void>;
   deleteUsuario: (usuario: Usuario) => Promise<void>;
@@ -17,12 +17,17 @@ interface UseUsuarioActionsReturn {
   showError: (message: string) => void;
 }
 
+/**
+ * Hook que encapsula las acciones de mutación (crear, actualizar, eliminar),
+ * el manejo de notificaciones y la revalidación de la caché de ISR.
+ */
 export const useUsuarioActions = ({
   onSuccess,
   onError,
 }: UseUsuarioActionsProps = {}): UseUsuarioActionsReturn => {
   const toast = useRef<Toast>(null);
 
+  // Invalida la caché de ISR bajo demanda para reflejar los cambios en la UI.
   const revalidateCache = async (path: string = '/') => {
     try {
       await fetch('/api/revalidate', {
@@ -32,9 +37,8 @@ export const useUsuarioActions = ({
         },
         body: JSON.stringify({ path }),
       });
-      console.log(`ISR bajo demanda: Cache invalidada para ${path}`);
     } catch (error) {
-      console.error('Error al invalidar cache ISR:', error);
+      console.error('Error al invalidar la caché de ISR:', error);
     }
   };
 
@@ -62,13 +66,12 @@ export const useUsuarioActions = ({
         id: data.id,
         usuario: data.usuario,
         estado: data.estado as UserStatus,
-        sector: SECTOR_FIJO, // Siempre usar sector fijo
+        sector: SECTOR_FIJO,
       };
 
       await usuarioService.createUsuario(usuarioData);
       showSuccess('Usuario creado exitosamente');
 
-      // Invalidar cache ISR inmediatamente
       await revalidateCache('/');
 
       onSuccess?.();
@@ -82,19 +85,18 @@ export const useUsuarioActions = ({
   const updateUsuario = async (data: FormData) => {
     try {
       if (!data.id) {
-        throw new Error('ID de usuario requerido para actualizar');
+        throw new Error('El ID del usuario es requerido para actualizar.');
       }
 
       const usuarioData = {
         usuario: data.usuario,
         estado: data.estado as UserStatus,
-        sector: SECTOR_FIJO, // Siempre usar sector fijo
+        sector: SECTOR_FIJO,
       };
 
       await usuarioService.updateUsuario(data.id, usuarioData);
       showSuccess('Usuario actualizado exitosamente');
 
-      // Invalidar cache ISR inmediatamente
       await revalidateCache('/');
 
       onSuccess?.();
@@ -108,13 +110,12 @@ export const useUsuarioActions = ({
   const deleteUsuario = async (usuario: Usuario) => {
     try {
       if (!usuario.id) {
-        throw new Error('ID de usuario requerido para eliminar');
+        throw new Error('El ID del usuario es requerido para eliminar.');
       }
 
       await usuarioService.deleteUsuario(usuario.id);
-      showSuccess(`Usuario ${usuario.usuario} eliminado exitosamente`);
+      showSuccess(`Usuario "${usuario.usuario}" eliminado exitosamente`);
 
-      // Invalidar cache ISR inmediatamente
       await revalidateCache('/');
 
       onSuccess?.();

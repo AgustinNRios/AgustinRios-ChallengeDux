@@ -4,6 +4,17 @@
     border-radius: 8px;
 }
 
+.userLink {
+    cursor: pointer;
+    color: #3b82f6;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.userLink:hover {
+    color: #1d4ed8;
+}
+
 @media (max-width: 768px) {
     .colId {
         display: none;

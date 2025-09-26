@@ -4,70 +4,46 @@
 
 ---
 
-## 🚀 Stack Principal y Plus
+## Consignas Cumplidas
 
-- **React**
-- **Next.js** (componentización, ISR)
-- **Tailwind CSS** (design system, consistencia visual)
-- **PrimeReact** (componentes UI profesionales)
-- **GitHub** (flujo profesional: ramas, PRs, convenciones de commits)
-- **TypeScript** (tipado seguro y robusto)
-- **ISR (Incremental Static Regeneration)** (rendimiento optimizado)
-- **Testing:** Jest, React Testing Library (calidad y confianza)
-- **CI/CD:** GitHub Actions + Vercel (deploy automático, feedback rápido)
+- ✅ **Listado de usuarios:** Visualización de todos los usuarios obtenidos desde la API.
+- ✅ **CRUD en Modal:** Formulario para **crear** y **editar** usuarios dentro de un modal para una experiencia de usuario fluida y sin recargas de página.
+- ✅ **Validaciones de Formulario:** Comprobaciones robustas tanto en cliente como (simulado) en servidor para asegurar la integridad de los datos.
+- ✅ **Eliminación de usuarios:** Funcionalidad para borrar usuarios con un diálogo de confirmación para evitar acciones accidentales.
+- ✅ **Filtros y Paginación:** Búsqueda por nombre y paginación eficiente para manejar grandes volúmenes de datos.
+- ✅ **Diseño Responsive:** Adaptación fiel de la interfaz a diferentes tamaños de pantalla (móvil, tablet y escritorio).
 
 ---
 
-## 🧩 Módulos y Features Clave
+## ✨ Extras y Mejoras
 
-- **ISR (Incremental Static Regeneration):**  
-  Implementación de ISR para cargar datos pre-generados instantáneamente, mejorando significativamente la experiencia del usuario en la primera carga.
-  
-- **Gestión de Usuarios:**  
-  CRUD completo con filtros avanzados, paginación y validaciones.
-  
-- **Arquitectura Modular:**  
-  Separación clara entre Server Components (ISR) y Client Components (interactividad).
-  
-- **Optimización de Performance:**  
-  Cache inteligente, skeleton loading y revalidación automática cada 60 segundos.
+Este proyecto va más allá de los requisitos solicitados, incorporando prácticas y tecnologías modernas para entregar un producto de alta calidad, organizado en las siguientes áreas:
+
+### Arquitectura y Patrones de Diseño
+- **Atomic Design:** Estructura de componentes organizada en átomos, moléculas y organismos para maximizar la reutilización y consistencia.
+- **Separación de Responsabilidades:** Clara distinción entre Server Components (para fetching de datos y renderizado estático) y Client Components (para interactividad), aprovechando lo mejor de Next.js.
+- **Prevención de Prop-Drilling:** Uso de composición de componentes y una estructura lógica para evitar el paso innecesario de props a través de múltiples niveles.
+
+### Experiencia de Usuario (UX) y Performance
+- **ISR (Incremental Static Regeneration):** Carga de datos pre-generada para una performance inicial instantánea y revalidación automática.
+- **React Suspense:** Implementado para manejar estados de carga de forma declarativa, mostrando `fallbacks` (como skeletons) mientras los datos o componentes se cargan.
+- **Optimistic UI (UI Optimista):** Las acciones del usuario (como agregar o eliminar) se reflejan instantáneamente en la UI mientras la petición se completa en segundo plano.
+- **Mejoras Visuales:** Animaciones sutiles, `Skeleton Loading` y un diseño pulido para una experiencia de usuario más agradable y profesional.
+
+### Calidad de Código y Mantenibilidad
+- **CI/CD (Integración y Despliegue Continuo):** Workflow automatizado con GitHub Actions y Vercel para linting, builds, tests y deploys automáticos.
+- **Testing Riguroso:** Se ha configurado el pipeline de CI/CD en GitHub Actions para ejecutar tests y reportar el coverage a Coveralls. **(Pendiente: Implementación de los tests unitarios y de integración con Jest y React Testing Library)**.
+- **Documentación de Código:** Componentes, hooks y funciones complejas documentadas con JSDoc para facilitar el entendimiento y mantenimiento del código.
 
 ---
 
-## 🛠️ Buenas Prácticas y Conocimientos Demostrados
+## 🚀 Stack Utilizado
 
-<!-- - **Diseño Responsive Fiel al Original:**
-  Implementación responsive que respeta el diseño en todos los dispositivos, demostrando atención al detalle más allá de los requisitos explícitos.
-- **Animaciónes**  
-  Animaciónes de entrada y card con tilt.
-- **Buenas prácticas y atención al detalle:**  
-  Componentización, variables de color, tipografía y componentes reutilizables.
-- **Testing:**  
-  Pruebas unitarias y de integración para lógica y UI.
-- **CI/CD:**  
-  Workflows automáticos para lint, build, test y deploy en Vercel.
-- **SEO:**  
-  Metadatos, sitemaps, etiquetas accesibles y semantic HTML.
-- **SSR:**  
-  Uso de server-side rendering.
-- **Performance:**  
-  Lazy loading, optimización de imágenes y Core Web Vitals monitoreados con PageSpeed Insights.
-
---- -->
-
-## 🖼️ Screenshots y Resultados
-
-### Vista de Escritorio
-![Vista de Escritorio]()
-
-### Vistas Móviles
-
-| Vista Principal | Menú Abierto |
-| :---: | :---: |
-| ![Vista Móvil]() | ![Menú Móvil]() |
-
-<!-- ### Reporte de PageSpeed Insights
-![Reporte de PageSpeed Insights]() -->
+- **React** y **Next.js**
+- **TypeScript**
+- **CSS Modules** y **PrimeReact**
+- **Jest** y **React Testing Library**
+- **GitHub Actions** y **Vercel** para CI/CD
 
 ---
 
@@ -85,30 +61,4 @@ cp env.example .env.local
 yarn dev
 ```
 
-### 🚀 Configuración de ISR
-
-La aplicación está configurada con **Incremental Static Regeneration** para optimizar el rendimiento:
-
-- **Revalidación:** Cada 120 segundos
-- **Cache:** `s-maxage=60, stale-while-revalidate=300`
-- **Fallback:** Skeleton loading mientras se cargan datos frescos
-- **Beneficios:** Primera carga instantánea + datos siempre actualizados
-
-#### ⚠️ Importante sobre ISR:
-
-**ISR NO funciona en modo desarrollo (`npm run dev`)**. Para probar ISR real:
-
-```bash
-# Probar ISR en producción
-npm run test-isr
-
-# O manualmente:
-npm run build
-npm start
-```
-
-En desarrollo verás la lentitud normal, pero en producción será instantáneo.
-
----
-
-**¡Gracias por la oportunidad! Estoy listo para aportar valor y calidad en su equipo.**
+**¡Gracias por revisar el proyecto! hasta la próxima!**

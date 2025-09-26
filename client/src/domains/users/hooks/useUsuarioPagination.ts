@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Usuario, PaginationParams } from '@/domains/users/model/usuario';
 import { usuarioService } from '@/domains/users/service/usuarioService';
+import { PAGINATION_LIMITS, ERROR_MESSAGES } from '@/domains/users/utils/constants';
 
-interface UseUsuariosReturn {
+interface UseUsuarioPaginationReturn {
   usuarios: Usuario[];
   loading: boolean;
   pagination: {
@@ -17,42 +18,56 @@ interface UseUsuariosReturn {
   setInitialData: (usuarios: Usuario[], pagination: { page: number; limit: number; total: number; totalPages: number; }) => void;
 }
 
-export const useUsuarios = (): UseUsuariosReturn => {
+/**
+ * Hook para gestionar la paginación, carga de datos y estado de la tabla de usuarios.
+ * Encapsula la comunicación con la API y la lógica de hidratación de datos desde el servidor (ISR).
+ */
+export const useUsuarioPagination = (): UseUsuarioPaginationReturn => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [initialDataSet, setInitialDataSet] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<{
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  }>({
     page: 1,
-    limit: 5,
+    limit: PAGINATION_LIMITS.SMALL,
     total: 0,
     totalPages: 0,
   });
 
-  const fetchUsuarios = async (params?: PaginationParams) => {
+  const fetchUsuarios = useCallback(async (params?: PaginationParams) => {
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
-      
       const response = await usuarioService.getUsuarios(params);
-      
-      setUsuarios(response.data);
-      setPagination(response.pagination);
+      if (response && response.data && response.pagination) {
+        setUsuarios(response.data);
+        setPagination(response.pagination);
+      } else {
+        throw new Error('La respuesta de la API no tiene el formato esperado.');
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al cargar usuarios');
-      console.error('Error fetching usuarios:', err);
+      const errorMessage = err instanceof Error ? err.message : ERROR_MESSAGES.FETCH_USERS;
+      setError(errorMessage);
+      console.error('Error en fetchUsuarios:', err);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const refreshUsuarios = async () => {
+  // Refresca los datos de la tabla con los parámetros de paginación actuales.
+  const refreshUsuarios = useCallback(async () => {
     await fetchUsuarios({
       page: pagination.page,
       limit: pagination.limit,
     });
-  };
+  }, [fetchUsuarios, pagination.page, pagination.limit]);
 
+  // Establece los datos iniciales del servidor (ISR) y previene fetches adicionales.
   const setInitialData = (initialUsuarios: Usuario[], initialPagination: { page: number; limit: number; total: number; totalPages: number; }) => {
     if (!initialDataSet) {
       setUsuarios(initialUsuarios);
@@ -61,12 +76,12 @@ export const useUsuarios = (): UseUsuariosReturn => {
     }
   };
 
+  // Carga los datos iniciales si no fueron provistos por el servidor.
   useEffect(() => {
-    // Solo hacer fetch si no se han establecido datos iniciales
     if (!initialDataSet) {
       fetchUsuarios();
     }
-  }, [initialDataSet]);
+  }, [initialDataSet, fetchUsuarios]);
 
   return {
     usuarios,

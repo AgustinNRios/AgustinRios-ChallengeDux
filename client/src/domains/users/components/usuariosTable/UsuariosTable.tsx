@@ -3,53 +3,117 @@
 import { DataTable, DataTableStateEvent, DataTableSortEvent } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Skeleton } from 'primereact/skeleton';
 import { UserStatus, Usuario } from '@/domains/users/model/usuario';
+import { useUsuarioPagination } from '@/domains/users/hooks/useUsuarioPagination';
+import { useUsuarioActions } from '@/domains/users/hooks/useUsuarioActions';
+import { useUrlState } from '@/domains/users/hooks/useUrlState';
+import { useUsuarioModalContext } from '@/domains/users/context/UsuarioModalContext';
+import { buildSearchParamsFromStart, buildSearchParamsWithPage } from '@/domains/users/utils/searchUtils';
+import { convertPaginationEvent } from '@/domains/users/utils/paginationUtils';
 import styles from './UsuariosTable.module.css';
 
 interface UsuariosTableProps {
-  usuarios: Usuario[];
-  loading: boolean;
-  onEdit: (usuario: Usuario) => void;
-  onDelete: (usuario: Usuario) => void;
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
+  // Props mínimas necesarias desde el componente padre
+  filtros?: {
+    search: string;
+    estado: string;
   };
-  onPageChange: (event: DataTableStateEvent) => void;
-  sortField: string;
-  sortOrder: 1 | -1 | null;
-  onSort: (event: DataTableSortEvent) => void;
 }
 
-export const UsuariosTable = ({
-  usuarios,
-  loading,
-  onEdit,
-  onDelete,
-  pagination,
-  onPageChange,
-  sortField,
-  sortOrder,
-  onSort,
-}: UsuariosTableProps) => {
+/**
+ * Componente de tabla de usuarios que maneja su propio estado interno.
+ * Utiliza hooks especializados para paginación, acciones CRUD y estado de URL.
+ * Se comunica con el modal a través del contexto para evitar prop drilling.
+ */
+export const UsuariosTable = ({ filtros = { search: '', estado: '' } }: UsuariosTableProps) => {
   const toast = useRef<Toast>(null);
+  
+  // Hooks para manejar estado y funcionalidad
+  const { urlState, updateUrl, resetToFirstPage } = useUrlState();
+  const { openEditModal, setOnDataChange } = useUsuarioModalContext();
+  
+  const {
+    usuarios,
+    loading,
+    pagination,
+    error,
+    fetchUsuarios,
+    refreshUsuarios,
+  } = useUsuarioPagination();
+
+  const {
+    deleteUsuario,
+    showSuccess,
+    showError,
+  } = useUsuarioActions({
+    onSuccess: () => {
+      refreshUsuarios();
+    },
+  });
+
+  // Funciones de manejo de eventos
+  const handlePageChange = (event: DataTableStateEvent) => {
+    const { page, limit } = convertPaginationEvent(event, pagination);
+    updateUrl({ page, limit });
+    
+    const params = buildSearchParamsWithPage(page, { ...pagination, limit }, filtros, urlState.sortField, urlState.sortOrder);
+    fetchUsuarios(params);
+  };
+
+  const handleSort = (event: DataTableSortEvent) => {
+    const field = event.sortField;
+    const order = event.sortOrder as (1 | -1 | null);
+    
+    updateUrl({ sortField: field, sortOrder: order });
+    
+    const params = buildSearchParamsFromStart(pagination, filtros, field, order);
+    fetchUsuarios(params);
+  };
+
+  const handleEdit = (usuario: Usuario) => {
+    openEditModal(usuario);
+  };
 
   const confirmDelete = (usuario: Usuario) => {
     confirmDialog({
       message: '¿Estás seguro de que deseas eliminar este usuario?',
       header: 'Confirmar eliminación',
       icon: 'pi pi-exclamation-triangle',
-      accept: () => onDelete(usuario),
+      accept: () => deleteUsuario(usuario),
       acceptLabel: 'Sí, eliminar',
       rejectLabel: 'Cancelar',
       acceptClassName: 'p-button-danger',
     });
   };
+
+  // Efecto centralizado para la carga de datos.
+  // Se ejecuta cuando cambian los filtros, el ordenamiento o la página.
+  useEffect(() => {
+    const params = {
+      ...filtros,
+      page: urlState.page,
+      limit: urlState.limit,
+      sortField: urlState.sortField,
+      sortOrder: urlState.sortOrder,
+    };
+    fetchUsuarios(params);
+  }, [fetchUsuarios, filtros, urlState]);
+
+  // Registrar el callback para refrescar los datos desde el modal.
+  // Usamos un useEffect separado para que no se vuelva a registrar en cada render.
+  useEffect(() => {
+    setOnDataChange(() => fetchUsuarios({
+      ...filtros,
+      page: urlState.page,
+      limit: urlState.limit,
+      sortField: urlState.sortField,
+      sortOrder: urlState.sortOrder,
+    }));
+  }, [setOnDataChange, fetchUsuarios, filtros, urlState]);
 
   const createTextBodyTemplate = (field: string) => {
     const TextBodyTemplate = (rowData: Usuario) => {
@@ -103,15 +167,15 @@ export const UsuariosTable = ({
         rows={pagination.limit}
         totalRecords={pagination.total}
         first={(pagination.page - 1) * pagination.limit}
-        onPage={onPageChange}
+        onPage={handlePageChange}
         rowsPerPageOptions={[5, 10, 25, 50]}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         currentPageReportTemplate=""
         emptyMessage="No se encontraron usuarios"
         className="p-datatable-sm"
-        sortField={sortField}
-        sortOrder={sortOrder}
-        onSort={onSort}
+        sortField={urlState.sortField}
+        sortOrder={urlState.sortOrder}
+        onSort={handleSort}
         removableSort
         responsiveLayout="scroll"
       >
@@ -132,9 +196,8 @@ export const UsuariosTable = ({
             }
             return (
               <a
-                className="cursor-pointer text-blue-500 hover:text-blue-700 underline"
-                onClick={() => onEdit(rowData)}
-                style={{ cursor: 'pointer' }}
+                className={styles.userLink}
+                onClick={() => handleEdit(rowData)}
               >
                 {rowData.usuario}
               </a>

@@ -1,9 +1,19 @@
 import { Usuario, PaginationParams } from '@/domains/users/model/usuario';
 
+/**
+ * Objeto que encapsula todas las operaciones de red relacionadas con los usuarios.
+ * Funciona como una capa de abstracción entre los componentes de la UI y la API.
+ */
 export const usuarioService = {
+  /**
+   * Obtiene una lista paginada y filtrada de usuarios desde la API.
+   * @param params - Objeto con parámetros de paginación y filtros (página, límite, búsqueda, etc.).
+   * @returns Una promesa que resuelve a un objeto con los datos de los usuarios y la información de paginación.
+   */
   async getUsuarios(params: PaginationParams = {}) {
     const { page = 1, limit = 5, search, estado, sortField, sortOrder } = params;
 
+    // Construye los parámetros de la URL de forma dinámica a partir de los filtros.
     const queryParams = new URLSearchParams({
       _page: page.toString(),
       _limit: limit.toString(),
@@ -21,7 +31,8 @@ export const usuarioService = {
     const response = await fetch(url);
     
     if (!response.ok) {
-      throw new Error('Error al obtener los usuarios');
+      const errorText = await response.text();
+      throw new Error(`Error al obtener los usuarios: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
