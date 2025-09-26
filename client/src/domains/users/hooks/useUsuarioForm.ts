@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Usuario, UserStatus, SECTOR_FIJO } from '@/domains/users/model/usuario';
-
-interface FormData {
-  id?: string;
-  usuario: string;
-  estado: UserStatus;
-  sector: number | string;
-}
+import { Usuario, UserStatus, SECTOR_FIJO, FormData } from '@/domains/users/model/usuario';
 
 interface FormErrors {
   id?: string;

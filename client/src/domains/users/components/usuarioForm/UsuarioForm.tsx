@@ -1,17 +1,10 @@
 "use client";
 
 import { Button } from "primereact/button";
-import { Usuario, ESTADOS_FORM } from "@/domains/users/model/usuario";
+import { Usuario, ESTADOS_FORM, FormData } from "@/domains/users/model/usuario";
 import { InputGroup } from "@/components/ui/inputGroup/InputGroup";
 import { useUsuarioForm } from "@/domains/users/hooks/useUsuarioForm";
 import styles from './UsuarioForm.module.css';
-
-interface FormData {
-  id?: string;
-  usuario: string;
-  estado: string;
-  sector: number | string;
-}
 
 interface UsuarioFormProps {
   onSubmit: (data: FormData) => void;
@@ -40,7 +33,7 @@ export const UsuarioForm = ({
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className="p-fluid">
+      <form onSubmit={handleSubmit} className={styles.form + ' p-fluid'}>
         <InputGroup
           type="text"
           icon="pi-id-card"
@@ -88,18 +81,26 @@ export const UsuarioForm = ({
 
         <div className={styles.actions}>
           <Button
+            pt={{root: {
+              style: {backgroundColor: '#2563EB'}}
+            }}
             type="submit"
             label={isEditing ? "Actualizar" : "Confirmar"}
             icon={`pi ${isEditing ? "pi-check" : "pi-check"}`}
             className="p-button-primary"
+            style={{maxWidth: '118px'}}
           />
           <Button
+            pt={{root: {
+              style: {color: '#2563EB', borderColor: '#2563EB'}}
+            }}
             type="button"
             label="Cancelar"
             icon="pi pi-times"
             className="p-button-primary"
             onClick={onCancel}
             outlined
+            style={{maxWidth: '118px'}}
           />
         </div>
       </form>

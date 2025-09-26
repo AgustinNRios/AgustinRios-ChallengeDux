@@ -1,14 +1,7 @@
 import { useRef } from 'react';
 import { Toast } from 'primereact/toast';
-import { Usuario, UserStatus, SECTOR_FIJO } from '@/domains/users/model/usuario';
+import { Usuario, UserStatus, SECTOR_FIJO, FormData } from '@/domains/users/model/usuario';
 import { usuarioService } from '@/domains/users/service/usuarioService';
-
-interface FormData {
-  id?: string;
-  usuario: string;
-  estado: string;
-  sector: number | string;
-}
 
 interface UseUsuarioActionsProps {
   onSuccess?: () => void;
@@ -39,10 +32,9 @@ export const useUsuarioActions = ({
         },
         body: JSON.stringify({ path }),
       });
-      console.log(`🔄 ISR bajo demanda: Cache invalidada para ${path}`);
+      console.log(`ISR bajo demanda: Cache invalidada para ${path}`);
     } catch (error) {
       console.error('Error al invalidar cache ISR:', error);
-      // No mostrar error al usuario, es solo para optimización
     }
   };
 

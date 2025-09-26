@@ -4,6 +4,7 @@ import { Dialog } from 'primereact/dialog';
 import { Usuario } from '@/domains/users/model/usuario';
 import { UsuarioForm } from '@/domains/users/components/usuarioForm/UsuarioForm';
 import styles from './UsuarioModal.module.css';
+import style from 'styled-jsx/style';
 
 interface UsuarioFormData {
   id?: string;
@@ -33,7 +34,9 @@ export const UsuarioModal = ({ visible, onHide, onSave, usuario, isEditing = fal
         </div>
       }
       pt={{
-        
+        header: {
+          style: { backgroundColor: '#0763E7', padding: '10px', paddingLeft: '20px'}
+        },
       }}      
       visible={visible}
       style={{ width: '50vw' }}
