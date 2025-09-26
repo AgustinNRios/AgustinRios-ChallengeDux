@@ -2,6 +2,10 @@
     padding: 1rem;
     background: #fff;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 900px;
 }
 
 .userLink {

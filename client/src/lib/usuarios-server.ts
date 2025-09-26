@@ -74,7 +74,7 @@ export async function getInitialUsuarios() {
   }
   
   try {
-    const result = await getUsuariosServer({ page: 1, limit: 5 });
+            const result = await getUsuariosServer({ page: 1, limit: 5 });
     
     console.log('✅ ISR: Datos obtenidos exitosamente:', {
       dataLength: result?.data?.length || 0,

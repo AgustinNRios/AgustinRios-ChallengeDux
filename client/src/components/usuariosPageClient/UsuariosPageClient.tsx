@@ -22,33 +22,19 @@ interface UsuariosPageClientProps {
   };
 }
 
-/**
- * Componente cliente que gestiona la interactividad de la página de usuarios.
- * Recibe los datos iniciales del servidor (ISR) y se encarga de los filtros,
- * la paginación y la apertura de modales.
- */
 export function UsuariosPageClient({ initialUsuarios, initialPagination }: UsuariosPageClientProps) {
-  // Ref para gestionar el temporizador del "debounce" en la búsqueda.
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Hook personalizado para centralizar la lógica de los filtros.
   const {
     filtros,
     setFiltros,
     handleSearchChange: handleSearchChangeBase,
   } = useUsuarioFilters();
 
-  // Hook para acceder al contexto del modal y poder abrirlo.
   const { openCreateModal } = useUsuarioModalContext();
 
-  /**
-   * Maneja el cambio en el filtro de estado.
-   * Incluye una salvaguarda por si el componente de UI devuelve un objeto en lugar de un valor primitivo.
-   */
   const handleEstadoChange = (value: string | number) => {
     let estadoValue: string;
-    // Algunos componentes de UI pueden devolver un objeto de evento en lugar del valor.
-    // Esta comprobación asegura que siempre trabajemos con un string.
     if (typeof value === 'object') {
       estadoValue = '';
     } else {
@@ -57,18 +43,10 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
     setFiltros(prev => ({ ...prev, estado: estadoValue }));
   };
 
-  /**
-   * Previene el comportamiento por defecto del formulario (recarga de página) al presionar Enter.
-   */
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
   };
 
-  /**
-   * Gestiona el cambio en el input de búsqueda con una técnica de "debounce".
-   * Esto evita que se actualice el estado (y se dispare una nueva búsqueda) con cada tecla presionada,
-   * mejorando el rendimiento al esperar 500ms después de que el usuario deja de escribir.
-   */
   const handleSearchChange = (value: string | number) => {
     handleSearchChangeBase(value);
 
@@ -82,16 +60,12 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
     }, 500);
   };
 
-  /**
-   * Abre el modal para la creación de un nuevo usuario.
-   */
   const handleCreate = () => {
     openCreateModal();
   };
 
   return (
     <div className={styles.container}>
-      {/* Encabezado de la página con título y botón de acción principal */}
       <div className={styles.header}>
         <h2 className={styles.title}>Usuarios</h2>
         <Button
@@ -102,7 +76,6 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
         />
       </div>
 
-      {/* Sección de filtros para la tabla de usuarios */}
       <form onSubmit={handleSearch} className={styles.filters}>
         <InputGroup
           type="text"
@@ -128,12 +101,10 @@ export function UsuariosPageClient({ initialUsuarios, initialPagination }: Usuar
         </div>
       </form>
 
-      {/* Tabla que muestra los usuarios, recibe los filtros para re-renderizarse */}
       <UsuariosTable
         filtros={filtros}
       />
 
-      {/* Contenedor del modal, se renderiza aquí para estar disponible en toda la página */}
       <UsuarioModalContainer />
     </div>
   );

@@ -10,7 +10,7 @@ async function UsuariosDataLoader() {
   // Carga de datos inicial en el servidor. En caso de error, se provee un estado inicial vacío.
   let initialData;
   try {
-    initialData = await getInitialUsuarios();
+            initialData = await getInitialUsuarios();
   } catch (error) {
     console.error('Error al obtener los usuarios iniciales:', error);
     initialData = {
@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <ErrorBoundary>
       <Suspense fallback={<TableSkeleton />}>
-        <UsuariosDataLoader />
+          <UsuariosDataLoader />
       </Suspense>
     </ErrorBoundary>
   );

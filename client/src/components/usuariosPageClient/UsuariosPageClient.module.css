@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    height: auto;
+    overflow: auto; /* El scroll principal lo manejará la tabla */
 }
 
 .header {
