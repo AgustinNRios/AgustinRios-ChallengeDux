@@ -92,7 +92,7 @@ export const UsuariosTable = ({
   }));
 
   return (
-    <div className="card">
+    <div className={styles.card}>
       <Toast ref={toast} />
       <ConfirmDialog />
       <DataTable
@@ -113,6 +113,7 @@ export const UsuariosTable = ({
         sortOrder={sortOrder}
         onSort={onSort}
         removableSort
+        responsiveLayout="scroll"
       >
         <Column 
           field="id" 
@@ -120,6 +121,7 @@ export const UsuariosTable = ({
           body={createTextBodyTemplate('id')}
           sortable 
           style={{ width: '5%' }} 
+          className={styles.colId}
         />
         <Column 
           field="usuario" 
