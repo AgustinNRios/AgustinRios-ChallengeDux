@@ -19,6 +19,11 @@
 
 Este proyecto va más allá de los requisitos solicitados, incorporando prácticas y tecnologías modernas para entregar un producto de alta calidad, organizado en las siguientes áreas:
 
+## Nota
+
+- **Actualmente al realizar las operaciones CRUD: Aveces no actualiza la lista** Parece que tarda en reflejarse la mutación en la "base de datos" Note que a medida que utilice la API se fue volviendo mas lenta.
+---
+
 ### Arquitectura y Patrones de Diseño
 - **Atomic Design:** Estructura de componentes organizada en átomos, moléculas y organismos para maximizar la reutilización y consistencia.
 - **Separación de Responsabilidades:** Clara distinción entre Server Components (para fetching de datos y renderizado estático) y Client Components (para interactividad), aprovechando lo mejor de Next.js.
