@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Usuario, PaginationParams } from '@/domains/users/model/usuario';
 import { usuarioService } from '@/domains/users/service/usuarioService';
 import { PAGINATION_LIMITS, ERROR_MESSAGES } from '@/domains/users/utils/constants';
@@ -39,7 +39,7 @@ export const useUsuarioPagination = (): UseUsuarioPaginationReturn => {
     totalPages: 0,
   });
 
-  const fetchUsuarios = useCallback(async (params?: PaginationParams) => {
+  const fetchUsuarios = async (params?: PaginationParams) => {
     setLoading(true);
     setError(null);
     try {
@@ -57,15 +57,15 @@ export const useUsuarioPagination = (): UseUsuarioPaginationReturn => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   // Refresca los datos de la tabla con los parámetros de paginación actuales.
-  const refreshUsuarios = useCallback(async () => {
+  const refreshUsuarios = async () => {
     await fetchUsuarios({
       page: pagination.page,
       limit: pagination.limit,
     });
-  }, [fetchUsuarios, pagination.page, pagination.limit]);
+  };
 
   // Establece los datos iniciales del servidor (ISR) y previene fetches adicionales.
   const setInitialData = (initialUsuarios: Usuario[], initialPagination: { page: number; limit: number; total: number; totalPages: number; }) => {
@@ -79,9 +79,30 @@ export const useUsuarioPagination = (): UseUsuarioPaginationReturn => {
   // Carga los datos iniciales si no fueron provistos por el servidor.
   useEffect(() => {
     if (!initialDataSet) {
-      fetchUsuarios();
+      // Llamar directamente a la lógica sin depender de la función fetchUsuarios
+      const loadInitialData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const response = await usuarioService.getUsuarios();
+          if (response && response.data && response.pagination) {
+            setUsuarios(response.data);
+            setPagination(response.pagination);
+          } else {
+            throw new Error('La respuesta de la API no tiene el formato esperado.');
+          }
+        } catch (err) {
+          const errorMessage = err instanceof Error ? err.message : ERROR_MESSAGES.FETCH_USERS;
+          setError(errorMessage);
+          console.error('Error en fetchUsuarios:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+      loadInitialData();
     }
-  }, [initialDataSet, fetchUsuarios]);
+  }, [initialDataSet]); // Solo depende de initialDataSet
 
   return {
     usuarios,

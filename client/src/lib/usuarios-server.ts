@@ -25,9 +25,9 @@ export async function getUsuariosServer(params: PaginationParams = {}) {
     const url = `${externalApiUrl}?${queryParams}`;
     
     const response = await fetch(url, {
-      // Para ISR, especificamos un tiempo de revalidación.
-      // Next.js cacheará esta respuesta por 120 segundos.
-      next: { revalidate: 120 },
+      // ISR DESACTIVADO TEMPORALMENTE - Fuerza SSR puro
+      cache: 'no-store',
+      // next: { revalidate: 120 }, // ← ISR desactivado
     });
     
     if (!response.ok) {
@@ -74,7 +74,7 @@ export async function getInitialUsuarios() {
   }
   
   try {
-            const result = await getUsuariosServer({ page: 1, limit: 5 });
+    const result = await getUsuariosServer({ page: 1, limit: 5 });
     
     console.log('✅ ISR: Datos obtenidos exitosamente:', {
       dataLength: result?.data?.length || 0,

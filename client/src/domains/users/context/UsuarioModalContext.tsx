@@ -20,12 +20,12 @@ interface UsuarioModalContextType {
    * que requiere que los datos de la tabla se actualicen. Este es el mecanismo que
    * notifica a otros componentes que deben volver a cargar los datos.
    */
-  onDataChange?: () => void;
+  onDataChange?: () => Promise<void>;
   /**
    * Permite que un componente consumidor (como la tabla de usuarios) "registre" su propia
    * función de actualización de datos en el contexto. Es un patrón de inversión de control.
    */
-  setOnDataChange: (callback: () => void) => void;
+  setOnDataChange: (callback: () => Promise<void>) => void;
 }
 
 // Creación del contexto de React. Se inicializa como `undefined` porque el valor real
@@ -41,10 +41,10 @@ export const UsuarioModalProvider: FC<{ children: ReactNode }> = ({ children }) 
   const modalState = useUsuarioModal();
   
   // Estado para almacenar la función de callback que refrescará los datos.
-  const [onDataChange, setOnDataChangeState] = useState<(() => void) | undefined>();
+  const [onDataChange, setOnDataChangeState] = useState<(() => Promise<void>) | undefined>();
 
   // `useCallback` asegura que la función `setOnDataChange` no se cree en cada render.
-  const setOnDataChange = useCallback((callback: () => void) => {
+  const setOnDataChange = useCallback((callback: () => Promise<void>) => {
     setOnDataChangeState(() => callback);
   }, []);
 

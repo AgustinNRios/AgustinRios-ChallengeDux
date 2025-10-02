@@ -6,6 +6,8 @@ import { usuarioService } from '@/domains/users/service/usuarioService';
 interface UseUsuarioActionsProps {
   onSuccess?: () => void;
   onError?: (error: string) => void;
+  refreshData?: () => Promise<void>; // Nueva prop para refrescar datos con filtros> void;
+
 }
 
 interface UseUsuarioActionsReturn {
@@ -24,6 +26,7 @@ interface UseUsuarioActionsReturn {
 export const useUsuarioActions = ({
   onSuccess,
   onError,
+  refreshData,
 }: UseUsuarioActionsProps = {}): UseUsuarioActionsReturn => {
   const toast = useRef<Toast>(null);
 
@@ -71,8 +74,13 @@ export const useUsuarioActions = ({
 
       await usuarioService.createUsuario(usuarioData);
       showSuccess('Usuario creado exitosamente');
-
+      // Revalidar caché ISR y refrescar datos del cliente con filtros actuales
       await revalidateCache('/');
+
+      // Agregar un pequeño delay para asegurar que la base de datos se actualice
+      await new Promise(resolve => setTimeout(resolve, 5000));
+
+      await refreshData?.();
 
       onSuccess?.();
     } catch (error) {
@@ -96,8 +104,13 @@ export const useUsuarioActions = ({
 
       await usuarioService.updateUsuario(data.id, usuarioData);
       showSuccess('Usuario actualizado exitosamente');
-
+      // Revalidar caché ISR y refrescar datos del cliente con filtros actuales
       await revalidateCache('/');
+
+      // Agregar un pequeño delay para asegurar que la base de datos se actualice
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      await refreshData?.();
 
       onSuccess?.();
     } catch (error) {
@@ -115,8 +128,16 @@ export const useUsuarioActions = ({
 
       await usuarioService.deleteUsuario(usuario.id);
       showSuccess(`Usuario "${usuario.usuario}" eliminado exitosamente`);
-
+      // Revalidar caché ISR y refrescar datos del cliente con filtros actuales
       await revalidateCache('/');
+
+      // Agregar un pequeño delay para asegurar que la base de datos se actualice
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Revalidar caché ISR y refrescar datos del cliente con filtros actuales
+      await revalidateCache('/');
+
+      await refreshData?.();
 
       onSuccess?.();
     } catch (error) {

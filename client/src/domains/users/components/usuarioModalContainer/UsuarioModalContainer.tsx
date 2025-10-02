@@ -3,6 +3,8 @@
 import { useUsuarioModalContext } from '@/domains/users/context/UsuarioModalContext';
 import { useUsuarioActions } from '@/domains/users/hooks/useUsuarioActions';
 import { UsuarioModal } from '@/domains/users/components/usuarioModal/UsuarioModal';
+import { useUsuarioPagination } from '../../hooks/useUsuarioPagination';
+import { useUsuarioFilters } from '../../hooks/useUsuarioFilters';
 
 /**
  * Container que maneja la lógica del modal de usuario.
@@ -18,14 +20,23 @@ export const UsuarioModalContainer = () => {
     onDataChange,
   } = useUsuarioModalContext();
 
+    // const {
+    //   filtros,
+    // } = useUsuarioFilters();
+  // const { fetchUsuarios } = useUsuarioPagination();
+
   const {
     createUsuario,
     updateUsuario,
   } = useUsuarioActions({
     onSuccess: () => {
       closeModal();
-      // Llamar al callback para refrescar los datos de la tabla
-      onDataChange?.();
+    },
+    refreshData: async () => {
+      // Ejecuta la función registrada desde UsuariosTable
+      if (onDataChange) {
+        await onDataChange();
+      }
     },
   });
 

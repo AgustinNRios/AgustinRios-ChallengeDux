@@ -37,14 +37,13 @@ export const UsuariosTable = ({ filtros }: UsuariosTableProps) => {
     usuarios,
     loading,
     pagination,
-    error,
     fetchUsuarios,
   } = useUsuarioPagination();
 
   const { deleteUsuario } = useUsuarioActions({
-    onSuccess: () => {
+    refreshData: async () => {
       // Llama a fetchUsuarios con los filtros y estado de tabla actuales para refrescar
-      fetchUsuarios({ ...filtros, ...tableState });
+      await fetchUsuarios({ ...filtros, ...tableState });
     },
   });
 
@@ -81,12 +80,16 @@ export const UsuariosTable = ({ filtros }: UsuariosTableProps) => {
       ...tableState,
     };
     fetchUsuarios(params);
-  }, [fetchUsuarios, filtros, tableState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtros, tableState]); // Intencionalmente no incluimos fetchUsuarios para evitar re-renders
 
   useEffect(() => {
-    const refreshData = () => fetchUsuarios({ ...filtros, ...tableState });
+    const refreshData = async () => {
+      await fetchUsuarios({ ...filtros, ...tableState });
+    };
     setOnDataChange(refreshData);
-  }, [setOnDataChange, fetchUsuarios, filtros, tableState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setOnDataChange, filtros, tableState]);
 
   const createTextBodyTemplate = (field: string) => {
     const TextBodyTemplate = (rowData: Usuario) => {
